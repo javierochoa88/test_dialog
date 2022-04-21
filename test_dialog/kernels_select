@@ -1,0 +1,222 @@
+#!/bin/bash
+
+title="| Arcris easy Installation of ArchLinux |"
+btn_confirm="Confirm"
+
+title_kernel="-| Kernel |-"
+msg_menu_kernel="Choose the kernel\n"
+msg_checklist="Select the modules you need - SPACE BAR  - Select or unselect *"
+cancel_label="I do not want this"
+oklabel="Next"
+
+msg_menu_kernel1="linux-stable"
+msg_menu_kernel2="linux-hardened"
+msg_menu_kernel3="linux-lts"
+msg_menu_kernel4="linux-zen"
+msg_menu_kernel1_aux=" Stable Kernel and vanilla Linux modules"
+msg_menu_kernel2_aux=" Security focused Kernel                "
+msg_menu_kernel3_aux=" Long Term Support Kernel               "
+msg_menu_kernel4_aux="Kernel in collaboration with several hackers"
+msg_module_kernel="-| Kernel Modules |-\n"
+msg_module_wifi="Wi-fi module"
+msg_module_touchpad="Touchpad module for Laptops "
+msg_module_bluetooth="Bluetooth module "
+msg_module_micro="Microcode for AMD or Intel CPU"
+
+kerneles () {
+
+### KERNEL 
+selecLinuxStable=false
+selecLinuxHard=false
+selecLinuxLts=false
+selecLinuxZen=false
+
+microdriver=false
+wifidriver=false
+wifidriverdmks=false
+touchdriver=false
+blutudriver=false
+
+selec8168=false
+selec8168lts=false
+
+kernel_var=0 
+
+
+
+
+while [ "$kernel_var" = "0" ] ; do
+
+kernel_select=$(dialog --backtitle "${title}" --title "${title_kernel}" \
+--stdout --ok-label "${btn_confirm}" --no-cancel --menu "${msg_menu_kernel}" 18 0 200 \
+"${msg_menu_kernel1}" "${msg_menu_kernel1_aux}" \
+"${msg_menu_kernel2}" "${msg_menu_kernel2_aux}" \
+"${msg_menu_kernel3}" "${msg_menu_kernel3_aux}" \
+"${msg_menu_kernel4}" "${msg_menu_kernel4_aux}")    
+
+#####Stable  
+  if [ $kernel_select == linux-stable ]; then
+##################################################################################
+r8168=$(arch-chroot /mnt /bin/bash -c "lspci -k | grep 'RTL8111/8168/8411' ")
+
+if [[ $r8168  = *RTL8111/8168/8411* || $r8168 = *Rtl8111/8168/8411* || $r8168 = *rtl8111/8168/8411* ]]
+then      
+selec8168=true
+fi
+
+cmd=(dialog --no-collapse --cr-wrap --backtitle "${title}" --separate-output --column-separator "|" \
+--no-tags --ok-label "${oklabel}" --cancel-label "${cancel_label}" --title "${msg_module_kernel}" --checklist "${msg_checklist}" 11 70 10)
+options=(1 "${msg_module_wifi}" off  # any option can be set to default to "on"
+         2 "${msg_module_touchpad}"  off
+         3 "${msg_module_bluetooth}" off)
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1) wifidriver=true
+        ;; 
+        2) touchdriver=true
+        ;;
+        3) blutudriver=true
+        ;;
+    esac
+done
+
+
+  selecLinuxStable=true
+  kernel_var=1
+
+
+#####hardened
+  elif [ $kernel_select == linux-hardened ]; then
+
+cmd=(dialog --no-collapse --cr-wrap --backtitle "${title}" --separate-output --column-separator "|" \
+--no-tags --ok-label "${oklabel}" --cancel-label "${cancel_label}" --title "${msg_module_kernel}" --checklist "${msg_checklist}" 11 70 10)
+options=(1 "${msg_module_wifi}" off  # any option can be set to default to "on"
+         2 "${msg_module_touchpad}"  off
+         3 "${msg_module_bluetooth}" off)
+
+
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+
+for choice in $choices
+do
+    case $choice in
+        1) wifidriverdmks=true
+        ;; 
+        2) touchdriver=true
+        ;;
+        3) blutudriver=true
+        ;;
+    esac
+done
+
+  selecLinuxHard=true
+  kernel_var=1
+
+
+
+######LTS
+  elif [ $kernel_select == linux-lts ]; then
+##################################################################################
+r8168=$(arch-chroot /mnt /bin/bash -c "lspci -k | grep 'RTL8111/8168/8411' ")
+if [[ $r8168  = *RTL8111/8168/8411* || $r8168 = *Rtl8111/8168/8411* || $r8168 = *rtl8111/8168/8411* ]]
+then      
+selec8168lts=true
+fi
+
+cmd=(dialog --no-collapse --cr-wrap --backtitle "${title}" --separate-output --column-separator "|" \
+--no-tags --ok-label "${oklabel}" --cancel-label "${cancel_label}" --title "${msg_module_kernel}" --checklist "${msg_checklist}" 11 70 10)
+options=(1 "${msg_module_wifi}" off  # any option can be set to default to "on"
+         2 "${msg_module_touchpad}"  off
+         3 "${msg_module_bluetooth}" off)
+
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1) wifidriverdmks=true
+        ;; 
+        2) touchdriver=true
+        ;;
+        3) blutudriver=true
+        ;;
+    esac
+done
+  
+  selecLinuxLts=true
+  kernel_var=1  
+
+
+###### ZEN
+  elif [ $kernel_select == linux-zen ]; then
+##################################################################################
+
+cmd=(dialog --no-collapse --cr-wrap --backtitle "${title}" --separate-output --column-separator "|" \
+--no-tags --ok-label "${oklabel}" --cancel-label "${cancel_label}" --title "${msg_module_kernel}" --checklist "${msg_checklist}" 11 70 10)
+options=(1 "${msg_module_wifi}" off  # any option can be set to default to "on"
+         2 "${msg_module_touchpad}"  off
+         3 "${msg_module_bluethoot}" off)
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1) wifidriverdmks=true
+        ;; 
+        2) touchdriver=true
+        ;;
+        3) blutudriver=true
+        ;;
+    esac
+done
+   
+  selecLinuxZen=true
+  kernel_var=1
+  
+  
+  fi
+done
+
+sectionkernel=1
+
+}
+
+
+demomicrocode () {
+
+cmd=(dialog --no-collapse --cr-wrap --backtitle "${title}" --separate-output --column-separator "|" \
+--no-tags --ok-label "${oklabel}" --cancel-label "${cancel_label}" --title "${msg_module_kernel}" --checklist "${msg_checklist}" 11 70 10)
+options=(1 "${msg_module_micro}" off  # any option can be set to default to "on"
+         2 "${msg_module_wifi}" off 
+         3 "${msg_module_touchpad}"  off
+         4 "${msg_module_bluetooth}" off)
+
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1) microdriver=true
+        ;; 
+        2) wifidriver=true
+        ;; 
+        3) touchdriver=true
+        ;;
+        4) blutudriver=true
+        ;;
+    esac
+done
+
+}
+
+kerneles
+demomicrocode

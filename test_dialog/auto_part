@@ -1,0 +1,30 @@
+#!/bin/bash
+title="Arcris Install"
+title_menu="-| Arcris for fun|-"
+btn_accept="Accept"
+oklabel="Next"
+
+menu_part_option="\nChoose the best option for the system\n\nThe SSD disk has a life cycle limited by the write cycles.
+\nUse the SWAP to improve the performance although the SSD life will be shorter.\n "
+msg_part_auto="-| Automatic disk partitioning |-"
+msg_part_op1=" Root ( ext4 ) Recommended     " 
+msg_part_op2=" Root - Swap ( ext4 )          "
+msg_part_op3=" Root - Home ( ext4 )          "
+msg_part_op4=" Root - Home - Swap ( ext4 )   "
+msg_part_op5=" Root ( Btrfs )   "
+
+autopartition () {
+
+
+cmd=(dialog --no-collapse --cr-wrap --backtitle "${title}" --title "${msg_part_auto}" \
+--no-tags --ok-label "${oklabel}" --nocancel --menu "${menu_part_option}" 20 64 20)
+options=(1 "${msg_part_op1}"  
+         2 "${msg_part_op2}"
+         3 "${msg_part_op3}"
+         4 "${msg_part_op4}"
+         5 "${msg_part_op5}")
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+}
+
+autopartition

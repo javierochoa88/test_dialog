@@ -1,0 +1,29 @@
+#!/bin/bash
+
+title="Arcris Install"
+msg_part_select="Select disk"
+msg_part_select_disk="Select your disk"
+
+msg_part="-| Message |-"
+msg_part_delete="\n> This process wipe out the entire disk, do not cancel it. \n\n> Sometimes you should reboot to see the changes."
+msg_part_confirm="-| Accept |-"
+msg_part_confirm_delete="\nThis may take some time depending on the size of the selected disk\n\n dd if=/dev/zero of=${disk} bs=4M conv=fsync oflag=direct status=progress \n\n¿ Do you want to continue ?"
+
+deletediskdd () {
+
+
+################################################################
+# SELETC DISK
+################################################################
+
+part="$(lsblk -lno NAME,SIZE,TYPE | grep 'disk' | awk '{print "/dev/" $1 " " $2}' | sort -u | sed '/f/d' | sed '/sr/d' )" 
+disk=$(dialog --backtitle "${title}" --clear  --ok-label "${msg_part_select}" --no-cancel --menu "${msg_part_select_disk}" 12 50 0 ${part} 2>&1 >/dev/tty)
+
+dialog --backtitle "${title}" --title "${msg_part}" \
+--msgbox "${msg_part_delete}" 11 50
+
+dialog --no-collapse --cr-wrap --backtitle "${title}" --title "${msg_part_confirm}" --yesno "${msg_part_delete_confirm}" 12 70
+
+}
+
+deletediskdd

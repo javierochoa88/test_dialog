@@ -1,0 +1,39 @@
+#!/bin/bash
+# Etiquetas para utilizar
+title="Instalador Arcris"
+oklabel=" Confirmar "
+notok=" No deseo esto "
+menu_utils="Utilidades para tu sistema\n[ ESPACIO ] - Para marcar o desmarcar *"
+menu_utils_op1="Lectura y formateo de discos incluido Android"
+menu_utils_op2="Compresión y Descompresión de archivos"
+menu_utils_op3="Códecs de video, lectura de todos los formatos de vídeo"
+menu_utils_op4="gufw - Firewall de red"
+menu_utils_op5="hardinfo - Información del sistema y benchmark"
+menu_utils_op6="gnome-disk-utility - Administrador de Discos"
+menu_utils_op7="gparted - Administrador de Discos"
+menu_utils_op8="yt-dlp - youtube-dl con funciones y correcciones adicionales"
+menu_utils_op9="viewnior - Visor de Imagenes"
+menu_utils_op10="gedit - Editor de Textos GTK"
+menu_utils_op11="Flatpak - Linux application sandboxing"
+menu_utils_op12="Qemu - Emulador y virtualizador"
+menu_utils_op13="VirtualBox - Emulador y virtualizador"
+
+# Dialog checklist menu
+cmd=(dialog --no-collapse --cr-wrap --backtitle "${title}"  \
+--no-tags --ok-label "${oklabel}" --cancel-label  "${notok}" --checklist "${menu_utils}" 21 80 21)
+options=(1 "${menu_utils_op1}" on    # any option can be set to default to "on"
+         2 "${menu_utils_op2}" on
+         3 "${menu_utils_op3}" off
+         4 "${menu_utils_op4}" off
+         5 "${menu_utils_op5}" off
+         6 "${menu_utils_op6}" off
+         7 "${menu_utils_op7}" off
+         8 "${menu_utils_op8}" off
+         9 "${menu_utils_op9}" off
+         10 "${menu_utils_op10}" off
+         11 "${menu_utils_op11}" off
+         12 "${menu_utils_op12}" off
+         13 "${menu_utils_op13}" off)
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+

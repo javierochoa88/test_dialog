@@ -1,0 +1,23 @@
+#!/bin/bash
+title="Arcris Install"
+
+msg_part_select="Select disk"
+msg_part_select_disk="Select your disk"
+msg_part_select_arch="\nSelect disk for Arch Linux\n "
+
+auto2 () {
+
+
+# dialog --backtitle "${title}" --title "-| Mensaje |-" --msgbox "\n> UEFI trabaja con discos en GPT \n\n> UEFI su partición boot es formateada en FAT32 \n\n> BIOS LEGACY trabaja con discos en DOS/MBR\n\n> BIOS LEGACY su partición boot es formateada en EXT4\n( La partición boot en linux es opcional )" 13 60
+# {sudo pacman -Sy ; printf "\n\n\n\n\n\n" ; lsblk -l 2>&1} | dialog --programbox " Preparando Disco - UEFI" 20 100
+
+################################################################
+# SELETC DISK
+################################################################
+
+part="$(lsblk -lno NAME,SIZE,TYPE | grep 'disk' | awk '{print "/dev/" $1 " " $2}' | sort -u | sed '/f/d' | sed '/sr/d' )" 
+disk=$(dialog --backtitle "${title}" --clear  --ok-label "${msg_part_select}" --no-cancel --menu "${msg_part_select_arch}" 12 45 0 ${part} 2>&1 >/dev/tty)
+
+}
+
+auto2

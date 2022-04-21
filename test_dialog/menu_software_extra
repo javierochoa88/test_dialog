@@ -1,0 +1,116 @@
+#!/bin/bash
+title="-| Arcris Installer for ArchLinux |-"
+cancel_label="I do not want this"
+btn_confirm="Confirm"
+
+text_menu_extraitems="-| Extra Software |-"
+text_menu_extras="Select extra software. You can use the UP/DOWN arrow keys to move between options and hit ENTER to jump into the desired option."
+
+msg_extras_section1="              Utilities                             "
+msg_extras_section2="              Terminals                             " 
+msg_extras_section3="              Audio                                 "
+msg_extras_section4="              MediaPlayers                          "
+msg_extras_section5="              Web Browsers                          "
+msg_extras_section6="              Office Suites                         "
+msg_extras_section7="              Task Managers                         "
+msg_extras_section8="              Social media                          "
+msg_extras_section9="              Gamers                                "
+msg_extras_section10="             AUR helpers                           " 
+msg_extras_install=" >Save the selected extra program choices and install<"
+
+
+extraprogram () {
+
+
+extraprograms=true
+
+AP_condicion=false
+TERMINAL_condicion=false
+
+while [[ $extraprograms == "true" ]]; do
+
+menuextras=$(dialog --keep-tite --backtitle "${title}" --title "${text_menu_extraitems}" \
+    --ok-label "${btn_confirm}" --default-item "${extras_item}" --no-tags \
+    --menu "${text_menu_extras}" 20 60 10 \
+    1 "${msg_extras_section1}" \
+    2 "${msg_extras_section2}" \
+    3 "${msg_extras_section3}" \
+    4 "${msg_extras_section4}" \
+    5 "${msg_extras_section5}" \
+    6 "${msg_extras_section6}" \
+    7 "${msg_extras_section7}" \
+    8 "${msg_extras_section8}" \
+    9 "${msg_extras_section9}" \
+    10 "${msg_extras_section10}" \
+    11 "${msg_extras_install}" 3>&1 1>&2 2>&3)
+
+
+case "$menuextras" in
+
+"1")
+fuc_utilidades
+extras_item="2"
+;;
+
+"2") 
+fuc_terminales
+extras_item="3"
+;;
+
+"3")
+fuc_audiosistema
+extras_item="4"
+;;
+
+"4") 
+fuc_reproductores
+extras_item="5"
+;;
+
+"5")
+fuc_navegador_web
+extras_item="6"
+;;
+
+"6")
+fuc_ofimatica
+extras_item="7"
+;;
+
+"7")
+fuc_administrador_de_tareas
+extras_item="8"
+;;
+
+"8")
+fuc_social
+extras_item="9"
+;;
+
+"9")
+fuc_gamer
+extras_item="10"
+;;
+
+"10")
+fuc_aur_helpers
+extras_item="11"
+;;
+
+"11")
+extraprograms=false
+break
+;;
+
+$1)  # BOTON CANCELAR
+extraprograms=false
+break
+;;
+
+    esac
+done
+
+
+}
+
+extraprogram

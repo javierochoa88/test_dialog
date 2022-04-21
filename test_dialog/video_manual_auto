@@ -1,0 +1,44 @@
+#!/bin/bash
+
+
+title_video="-| Video |-"
+msg_video_op1="Manual"
+msg_video_op2="Automatic"
+msg_video_detect="-| Video card detected -| See the title below."
+msg_video_chose="-| Choose an option -| \nYou can also use the [LEFT] [RIGHT] arrow or [TAB] keys."
+okbutton="<OK>"
+msg_error="-| ERROR |-"
+msg_kernel_select="\nSelect your kernel first. \n"
+sectionkernel=0
+
+drivervideo () {
+
+if [[ ${sectionkernel} == "1" ]]; then
+
+nombreGrafica=$(lspci | grep VGA |  awk -F " " '{print $5,$6,$7,$8,$9,$10}')
+
+dialog --keep-tite --no-collapse --cr-wrap --backtitle "${msg_video_detect}" \
+--title "${nombreGrafica}" --defaultno --yes-label "${msg_video_op1}" --no-label "${msg_video_op2}" \
+--yesno "${msg_video_chose}" 00 00
+
+respuestavideo=$?
+case $respuestavideo in
+
+   0) drivermanual ;;
+   1) driverautomatico ;;
+   255) echo "[ESC] key pressed.";;
+esac
+
+sectionvideo=1
+current_item="8"
+
+else
+
+dialog --backtitle "${title}" --title "${msg_error}" --stdout --ok-label "${okbutton}"  --msgbox "${msg_kernel_select} " 7 35
+current_item="6"
+
+fi
+
+}
+
+drivervideo

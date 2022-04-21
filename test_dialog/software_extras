@@ -1,0 +1,559 @@
+#!/bin/bash
+title="-| Instalador Arcris para ArchLinux |-"
+cancel_label="No deseo esto"
+btn_confirm="Confirmar"
+
+text_menu_checklist="Utilidades extra para el sistema. Utilice [ ESPACIO ] para marcar o desmarcar las opciones. Si hay dos primeras letras iguales presione otra vez la primera letra para selecionar la siguiente."
+
+msg_extras_op1="Lectura y formateo de discos incluido Android"
+msg_extras_op2="Compresión y Descompresión de archivos"
+msg_extras_op3="Códecs de video, lectura de todos los formatos de vídeo"
+msg_extras_op4="gufw - Firewall de red"
+msg_extras_op5="hardinfo - Información del sistema y benchmark"
+msg_extras_op6="gnome-disk-utility - Administrador de Discos"
+msg_extras_op7="gparted - Administrador de Discos"
+msg_extras_op8="yt-dlp - youtube-dl con funciones y correcciones adicionales"
+msg_extras_op9="viewnior - Visor de Imagenes"
+msg_extras_op10="gedit - Editor de Textos GTK"
+msg_extras_op11="Flatpak - Linux application sandboxing"
+msg_extras_op12="Qemu - Emulador y virtualizador"
+msg_extras_op13="VirtualBox - Emulador y virtualizador"
+
+msg_extras_term="-| Terminal |-"
+msg_extras_term1="lxterminal"
+msg_extras_term2="tilix"
+msg_extras_term3="xfce4-terminal"
+msg_extras_term4="deepin-terminal"
+msg_extras_term5="mate-terminal" 
+msg_extras_term6="terminator"
+msg_extras_term7="st"
+msg_extras_term8="alacritty"
+msg_extras_term9="kitty"
+
+msg_extras_audio="-| Audio del Sistema |-"
+
+text_menu_audio="-| Pulse Audio para el usuario tradicional -|\nPresione [ ESPACIO ] para marcar o desmarcar las opciones. Si hay dos primeras letras iguales presione otra vez la primera letra para selecionar la siguiente.\n "
+
+msg_extras_audio1="PipeWire   + Códecs de audio  "
+msg_extras_audio2="Pulseaudio + Códecs de audio  "
+msg_extras_audio3="Jack2      + Códecs de audio  "
+msg_extras_audio4="ALSA       + Códecs de audio  "
+
+text_menu_player="Seleccione el reproductor. Presione [ ESPACIO ] para marcar o desmarcar las opciones. Si hay dos primeras letras iguales presione otra vez la primera letra para selecionar la siguiente.\n "
+msg_extras_player="-| Reproductores Video y Audio |-"
+msg_extras_player1="vlc                           "
+msg_extras_player2="mpv                           "
+msg_extras_player3="nuclear-player-bin            "
+msg_extras_player4="spotify-Sin-Anuncios-adblock  "
+msg_extras_player5="audacious                     "
+msg_extras_player6="moc                           "
+msg_extras_player7="cmus                          "
+
+text_menu_browser="Selecciona tu navegador web. Presione [ ESPACIO ] para marcar o desmarcar las opciones. Si hay dos primeras letras iguales presione otra vez la primera letra para selecionar la siguiente.\n "
+msg_extras_browser="-| Navegadores de Internet |-"
+msg_extras_browser1="Firefox | Open source"
+msg_extras_browser2="Chromium | Open source"
+msg_extras_browser3="Midori | Open source"
+msg_extras_browser4="Brave | AUR - Open source"
+msg_extras_browser5="Google Chrome | AUR - No es Open Source"
+msg_extras_browser6="Opera | AUR - No es Open Source"
+msg_extras_browser7="Vivaldi | AUR - No es Open Source"
+msg_extras_browser8="Tor-browser | AUR - Open source"
+
+text_menu_office="Selecciona tus programas de Ofimática. Presione [ ESPACIO ] para marcar o desmarcar las opciones. Si hay dos primeras letras iguales presione otra vez la primera letra para selecionar la siguiente.\n "
+msg_extras_office="-| Programas de Ofimática |-"
+msg_extras_office1="LibreOffice | libreoffice-fresh"
+msg_extras_office2="WPS Office | AUR - wps-office"
+msg_extras_office3="SoftMaker Office | AUR - freeoffice "
+
+text_menu_tm="Selecciona tus programas de Ofimática. Presione [ ESPACIO ] para marcar o desmarcar las opciones. Si hay dos primeras letras iguales presione otra vez la primera letra para selecionar la siguiente.\n "
+msg_extras_tm="-| Administrador de Tareas |-"
+msg_extras_tm1="gnome-system-monitor "
+msg_extras_tm2="htop                 "
+msg_extras_tm3="bashtop              "
+msg_extras_tm4="gtop                 "
+msg_extras_tm5="gotop - AUR          "
+
+text_menu_social="Selecciona tus programas de Redes Sociales. Presione [ ESPACIO ] para marcar o desmarcar las opciones. Si hay dos primeras letras iguales presione otra vez la primera letra para selecionar la siguiente.\n "
+msg_extras_social="-| Redes Sociales |-"
+msg_extras_social1="Telegram | Mensajería instantánea"
+msg_extras_social2="Discord | Mensajería instantánea"
+msg_extras_social3="IGdm - AUR | App de chat de Instagram"
+msg_extras_social4="Whatsapp - AUR | whatsapp-nativefier-dark"
+msg_extras_social5="Facebook Messenger - AUR | caprine"
+msg_extras_social6="Netflix - AUR | netflix-qdesktop"
+msg_extras_social7="Skype - AUR | skypeforlinux-preview-bin"
+
+text_menu_aurhelper="Seleccione los helpers de AUR. Presione [ ESPACIO ] para marcar o desmarcar las opciones. Si hay dos primeras letras iguales presione otra vez la primera letra para selecionar la siguiente.\n "
+msg_extras_aurhelper="-| AUR Helper |-"
+msg_extras_aurhelper1="yay | Terminal"
+msg_extras_aurhelper2="trizen | Terminal"
+msg_extras_aurhelper3="pikaur | Terminal"
+msg_extras_aurhelper4="aurman | Terminal"
+msg_extras_aurhelper5="pakku | Terminal"
+msg_extras_aurhelper6="Pamac | Graphical"
+msg_extras_aurhelper7="Octopi | Graphical"
+msg_extras_aurhelper8="Cylon | Graphical"
+msg_extras_aurhelper9="Argon | Graphical"
+msg_extras_aurhelper10="Pakku GUI | Graph"
+
+fuc_utilidades () {
+
+#UTILIDADES
+cmd=(dialog --no-collapse --cr-wrap --backtitle "${title}"  \
+--no-tags --ok-label "${btn_confirm}" --cancel-label "${cancel_label}" --checklist "${text_menu_checklist}" 22 80  22)
+options=(1 "${msg_extras_op1}" on    # any option can be set to default to "on"
+         2 "${msg_extras_op2}" on
+         3 "${msg_extras_op3}" off
+         4 "${msg_extras_op4}" off
+         5 "${msg_extras_op5}" off
+         6 "${msg_extras_op6}" off
+         7 "${msg_extras_op7}" off
+         8 "${msg_extras_op8}" off
+         9 "${msg_extras_op9}" off
+         10 "${msg_extras_op10}" off
+         11 "${msg_extras_op11}" off
+         12 "${msg_extras_op12}" off
+         13 "${msg_extras_op13}" off)
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+1)
+UTIL1=true
+;;
+
+2)
+UTIL2=true
+;;
+
+3)
+UTIL3=true
+;;
+
+4)
+UTIL4=true
+;;
+
+5)
+UTIL5=true
+;;
+
+6)
+UTIL6=true
+;;
+
+7)
+UTIL7=true
+;;
+
+8) 
+UTIL8=true
+;;
+
+9)
+UTIL9=true
+;;   
+
+10)
+UTIL10=true
+;;
+
+
+11)
+UTIL11=true
+;; 
+
+12)
+UTIL12=true
+;; 
+
+13)
+UTIL13=true
+;; 
+
+    esac
+done
+#FINAL DE UTILIDADES
+}
+
+
+fuc_terminales () {
+
+#TERMINALES
+cmd=(dialog --no-collapse --cr-wrap --title "${msg_extras_term}" --backtitle "${title}"  \
+--no-tags --ok-label "${btn_confirm}" --cancel-label "${cancel_label}" --checklist "${text_menu_checklist}" 17 80 17)
+options=(1 "${msg_extras_term1}" on    # any option can be set to default to "on"
+         2 "${msg_extras_term2}" off
+         3 "${msg_extras_term3}" off
+         4 "${msg_extras_term4}" off
+         5 "${msg_extras_term5}" off
+         6 "${msg_extras_term6}" off
+         7 "${msg_extras_term7}" off
+         8 "${msg_extras_term8}" off
+         9 "${msg_extras_term9}" off)
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1)
+            TERMI1=true
+            ;;
+        2)
+            TERMI2=true
+            ;;
+        3)
+            TERMI3=true
+            ;;
+        4)
+            TERMI4=true
+            ;;
+        
+        5)
+            TERMI5=true
+            ;;
+
+        6)
+            TERMI6=true
+            ;;
+               
+        7)
+            TERMI7=true
+            ;;   
+        8)
+            TERMI8=true
+            ;;   
+        9)
+            TERMI9=true
+            ;;   
+    esac
+done
+#FINAL DE TERMINALES
+}
+
+fuc_audiosistema () {
+
+#AUDIO
+cmd=(dialog --no-collapse --cr-wrap --title "${msg_extras_audio}" --backtitle "${title}"  \
+--no-tags --ok-label "${btn_confirm}" --cancel-label "${cancel_label}" --radiolist "${text_menu_audio}" 17 80 17)
+options=(1 "${msg_extras_audio1}" on    # any option can be set to default to "on"
+         2 "${msg_extras_audio2}" off    
+         3 "${msg_extras_audio3}" off
+         4 "${msg_extras_audio4}" off)
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+
+        1)
+            AUDIO1=true
+            # https://wiki.archlinux.org/title/PipeWire
+            ;;
+
+        2)
+            AUDIO2=true
+            # https://wiki.archlinux.org/index.php/PulseAudio
+            # pulseeffects libcanberra-pulse libcanberra-gstreamer 
+            ;;
+
+        3)
+            AUDIO3=true
+            #https://wiki.archlinux.org/index.php/Professional_audio
+            ;;
+
+        4)
+            AUDIO4=true
+            #https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture
+            ;;
+
+    esac
+done
+#FIN_AUDIO
+
+}
+
+fuc_reproductores () {
+
+#REPRODUCTOR
+
+cmd=(dialog --no-collapse --cr-wrap --backtitle "${title}" --separate-output --column-separator "|" \
+--no-tags --ok-label "${btn_confirm}" --cancel-label "${cancel_label}" \
+--title "${msg_extras_player}" \
+--checklist "${text_menu_player}" 15 80 15)
+options=(   1 "${msg_extras_player1}" on
+            2 "${msg_extras_player2}" off
+            3 "${msg_extras_player3}" off            
+            4 "${msg_extras_player4}" off
+            5 "${msg_extras_player5}" off
+            6 "${msg_extras_player6}" off
+            7 "${msg_extras_player7}" off)
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1)
+            REPRO1=true
+            ;;
+        2)
+            REPRO2=true
+            ;;
+        3)
+            REPRO3=true
+            ;;
+        4)
+            REPRO4=true
+            ;;
+        5)
+            REPRO5=true
+            ;;
+        6)
+            REPRO6=true
+            ;;
+        7)
+            REPRO7=true
+            ;;
+    esac
+done
+
+# FIN REPRODUCTOR
+
+}
+
+fuc_navegador_web () {
+
+#NAVEGADORES
+cmd=(dialog --no-collapse --cr-wrap --title "${msg_extras_browser}" --backtitle "${title}" --separate-output --column-separator "|" \
+--no-tags --ok-label "${btn_confirm}" --cancel-label "${cancel_label}" --checklist "${text_menu_browser}" 16 80 16)
+options=(1 "${msg_extras_browser1}" on    # any option can be set to default to "on"
+         2 "${msg_extras_browser2}" off
+         3 "${msg_extras_browser3}" off
+         4 "${msg_extras_browser4}" off
+         5 "${msg_extras_browser5}" off         
+         6 "${msg_extras_browser6}" off
+         7 "${msg_extras_browser7}" off
+         8 "${msg_extras_browser8}" off)
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1)
+            WEB1=true
+            ;;
+        2)
+            WEB2=true
+            ;;
+        3)
+            WEB3=true
+            ;;
+        4)
+            WEB4=true
+            ;;
+        5)
+            WEB5=true
+            ;;
+        6)
+            WEB6=true
+            ;;
+        7)
+            WEB7=true
+            ;;
+        8)
+            WEB8=true
+            ;; 
+    esac
+done
+# FIN NAVEGADORES
+
+}
+
+fuc_ofimatica () {
+
+#OFFICE
+cmd=(dialog --no-collapse --cr-wrap --title "${msg_extras_office}" --backtitle "${title}" --separate-output --column-separator "|" \
+--no-tags --ok-label "${btn_confirm}" --cancel-label "${cancel_label}" --checklist "${text_menu_office}" 12 80 12)
+options=(    1 "${msg_extras_office1}" on
+             2 "${msg_extras_office2}" off
+             3 "${msg_extras_office3}" off)
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1)
+            OFFICE1=true
+            ;;
+        2)
+            OFFICE2=true
+            ;;
+        3)
+            OFFICE3=true
+            ;;
+    esac
+done
+# FIN OFFICE
+
+}
+
+fuc_administrador_de_tareas () {
+
+#Administrador de Tareas
+cmd=(dialog --no-collapse --cr-wrap --backtitle "${title}" --title "${msg_extras_tm}" \
+--no-tags  --ok-label "${btn_confirm}" --cancel-label "${cancel_label}" --checklist "${text_menu_tm}" 14 80 14)
+options=(1 "${msg_extras_tm1}" on
+         2 "${msg_extras_tm2}" on
+         3 "${msg_extras_tm3}" off
+         4 "${msg_extras_tm4}" off
+         5 "${msg_extras_tm5}" off)
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1)
+            AP1=true
+            ;;
+        2)
+            AP2=true
+            ;;
+        3)
+            AP3=true
+            ;;
+        4)
+            AP4=true
+            ;;
+        5)
+            AP5=true
+            ;;
+            
+            
+    esac
+done
+
+
+
+}
+
+fuc_social () {
+
+#Redes Sociales
+cmd=(dialog --no-collapse --cr-wrap --backtitle "${title}"  --title "${msg_extras_social}" \
+--no-tags  --ok-label "${btn_confirm}" --cancel-label "${cancel_label}" --column-separator "|" --checklist "${text_menu_social}" 15 80 20)
+options=(1 "${msg_extras_social1}" on
+         2 "${msg_extras_social2}" off
+         3 "${msg_extras_social3}" off
+         4 "${msg_extras_social4}" off
+         5 "${msg_extras_social5}" off
+         6 "${msg_extras_social6}" off
+         7 "${msg_extras_social7}" off)
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1)
+            RS1=true
+            ;;
+        2)
+            RS2=true
+            ;;
+        3)
+            RS3=true
+            ;;
+        4)
+            RS4=true
+            ;;    
+        5)
+            RS5=true
+            ;;            
+        6)
+            RS6=true
+            ;;
+
+        7)
+            RS7=true
+            ;;         
+
+    esac
+done
+#FINAL DE Redes Sociales
+
+}
+
+fuc_aur_helpers () {
+
+cmd=(dialog --no-collapse --cr-wrap --backtitle "${title}"  --title "${msg_extras_aurhelper}" \
+--no-tags  --ok-label "${btn_confirm}" --cancel-label "${cancel_label}" --column-separator "|" --checklist "${text_menu_aurhelper}" 19 80 19)
+options=(1 "${msg_extras_aurhelper1}" on
+         2 "${msg_extras_aurhelper2}" off
+         3 "${msg_extras_aurhelper3}" off
+         4 "${msg_extras_aurhelper4}" off
+         5 "${msg_extras_aurhelper5}" off
+         6 "${msg_extras_aurhelper6}" off
+         7 "${msg_extras_aurhelper7}" off
+         8 "${msg_extras_aurhelper8}" off
+         9 "${msg_extras_aurhelper9}" off
+         10 "${msg_extras_aurhelper10}" off)
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+        1)
+            AUR1=true
+            ;;
+        2)
+            AUR2=true
+            ;;
+        3)
+            AUR3=true
+            ;;
+        4)
+            AUR4=true
+            ;;    
+        5)
+            AUR5=true
+            ;;            
+        6)
+            AUR6=true
+            ;;
+        7)
+            AUR7=true
+            ;; 
+        8)
+            AUR8=true
+            ;;
+        9)
+            AUR9=true
+            ;; 
+        10)
+            AUR10=true
+            ;; 
+
+    esac
+done
+
+#FINAL DE AUR
+}
+
+fuc_utilidades
+fuc_terminales
+fuc_audiosistema
+fuc_reproductores
+fuc_navegador_web
+fuc_ofimatica
+fuc_administrador_de_tareas
+fuc_social
+fuc_aur_helpers

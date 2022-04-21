@@ -1,0 +1,517 @@
+#!/bin/bash
+title="| Instalador Arcris de ArchLinux |"
+msg_env_title="-| Entorno |-"
+
+msg_env_select="< Seleccionar >"
+msg_env_selection="-| Elige una opción |- Puede utilizar las teclas ARRIBA/ABAJO, si hay dos primeras letras iguales presione otra vez la primera letra para selecionar la siguiente."
+msg_env_tty="La terminal como entorno | (tty)"
+msg_env_de="Entorno de escritorio | (DE)"
+msg_env_wm="Gestor de ventanas | (WM)"
+
+msg_env_de1="Xfce desktop"
+msg_env_de2="GNOME Classic desktop"
+msg_env_de3="KDE Plasma desktop"
+msg_env_de4="Deepin desktop"
+msg_env_de5="Mate GTK3 desktop"
+msg_env_de6="LXDE-Qt & Razor-qt projects"
+msg_env_de7="The Lightweight X11 GTK2"
+msg_env_de8="The Lightweight X11 GTK3"
+msg_env_de9="Budgie desktop"
+msg_env_de10="Cinnamon desktop"
+msg_env_de11="GNOME 2 desktop"
+msg_env_de12="Enlightenment desktop"
+
+msg_env_xfce1="Xfce4"
+msg_env_xfce2="Xfce4 Arcris"
+
+msg_env_gnome1="Gnome || Sistema Completo  "
+msg_env_gnome2="Gnome || Minimalista       "
+msg_env_gnome3="Gnome || Tema Arcris       "
+msg_env_kde1="Plasma || Sistema Completo  "
+msg_env_kde2="Plasma || Minimalista       "
+
+msg_env_i3="i3wm | Disponible"
+msg_env_bspwm="bspwm | Disponible"
+msg_env_dwm="dwm | Disponible"
+msg_env_awesome="awesome | Disponible"
+msg_env_openbox="openbox | Disponible"
+
+msg_env_installtty="Se esta instalando el entorno TTY:"
+msg_env_installxfce4="Se esta instalando el entorno Xfce4:" 
+msg_env_installxfce4_arcris="Se esta instalando el entorno Xfce4 Arcris:"
+msg_env_installgnome="Se esta instalando el entorno Gnome:" 
+msg_env_installgnome_lite="Se esta instalando el entorno Gnome Lite:" 
+msg_env_installgnome_arcris="Se esta instalando el entorno Gnome Arcris:" 
+msg_env_installkde="Se esta instalando el entorno KDE Plasma:" 
+msg_env_installkde_lite="Se esta instalando el entorno KDE Plasma Lite:" 
+msg_env_installdeepin="Se esta instalando el entorno Deepin:" 
+msg_env_installmate="Se esta instalando el entorno MATE:" 
+msg_env_installlxqt="Se esta instalando el entorno LXQt:"
+msg_env_installlxde="Se esta instalando el entorno LXDE:" 
+msg_env_installlxdegtk3="Se esta instalando el entorno LXDE GTK3:"
+msg_env_installbudgie="Se esta instalando el entorno Budgie:"
+msg_env_installcinnamon="Se esta instalando el entorno Cinnamon:"
+msg_env_installgnome2="Se esta instalando el entorno GNOME 2:" 
+msg_env_installenlight="Se esta instalando el entorno Enlightenment:"
+
+msg_env_installi3w="Se esta instalando el entorno i3wm:"
+msg_env_installbspwm="Se esta instalando el entorno bspwm:"
+msg_env_installdwm="Se esta instalando el entorno dwm:"
+msg_env_installawesome="Se esta instalando el entorno Awesome:" 
+msg_env_installopenbox="Se esta instalando el entorno Open box:"
+
+environment () {
+
+DE=""
+DM=""
+WM=""
+seleccionDE=false
+seleccionWM=false
+seleccionXORG=false
+seleccionTTY=false
+
+
+
+cmd=(dialog --keep-tite --no-collapse --cr-wrap --backtitle "${title}" --title "${msg_env_title}" --column-separator "|" --no-tags --ok-label "${msg_env_select}" --nocancel --menu "${msg_env_selection}" 12 750 12)
+
+options=(1 "${msg_env_de}"
+         2 "${msg_env_wm}"
+         3 "${msg_env_tty}")
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+for choice in $choices
+do
+    case $choice in
+        1) #INICIO (DE)    
+
+seleccionDE=true
+
+cmd=(dialog --keep-tite --no-collapse --cr-wrap --backtitle "${title}" --column-separator "|" --no-tags --ok-label "${msg_env_select}" --menu "${msg_env_selection}" 21 60 21)
+
+options=(1 "${msg_env_de1}"
+         2 "${msg_env_de2}"
+         3 "${msg_env_de3}"
+         4 "${msg_env_de4}"
+         5 "${msg_env_de5}"
+         6 "${msg_env_de6}"
+         7 "${msg_env_de7}"
+         8 "${msg_env_de8}"
+         9 "${msg_env_de9}"
+         10 "${msg_env_de10}"
+         11 "${msg_env_de11}"
+         12 "${msg_env_de12}")
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+for choice in $choices
+do
+    case $choice in
+        
+###########SELECCION (DE)
+        1) #XFCE4
+
+cmd=(dialog --keep-tite --backtitle "${title}" \
+--no-collapse --cr-wrap --column-separator "|" --no-tags \
+--ok-label "${msg_env_select}" --nocancel --menu "${msg_env_selection}" 12 60 20)
+
+options=(1 "${msg_env_xfce1}"
+         2 "${msg_env_xfce2}")
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+for choice in $choices
+do
+    case $choice in
+
+        1)  DE="Xfce4"
+            ;;
+            
+        2)  DE="Xfce4 Arcris"
+            ;;
+            
+    esac
+done
+
+;;
+
+        2)  #INICIO GNOME
+cmd=(dialog --keep-tite --backtitle "${title}" \
+--no-collapse --cr-wrap --column-separator "|" --no-tags \
+--ok-label "${msg_env_select}" --nocancel --menu "${msg_env_selection}" 12 60 20)
+
+options=(1 "${msg_env_gnome1}"
+         2 "${msg_env_gnome2}"
+         3 "${msg_env_gnome3}")
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+for choice in $choices
+do
+    case $choice in
+
+        1)  DE="Gnome"
+            ;;
+            
+        2)  DE="Gnome Lite"
+            ;;
+
+        3)  DE="Gnome Arcris"     
+            ;;   
+    esac
+done   
+;;
+
+ 3)  #INICIO KDE
+cmd=(dialog --keep-tite --backtitle "${title}" \
+--no-collapse --cr-wrap --column-separator "|" --no-tags \
+--ok-label "${msg_env_select}" --nocancel --menu "${msg_env_selection}" 12 60 20)
+
+options=(1 "${msg_env_kde1}"
+         2 "${msg_env_kde2}")
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+for choice in $choices
+do
+    case $choice in
+
+        1)  DE="KDE Plasma"
+            ;;
+            
+        2)  DE="KDE Plasma Lite"
+            ;;
+
+    esac
+done
+
+        ;;
+
+        4)  #INICIO DEEPIN
+            DE="Deepin"
+            ;;
+
+        5)  #INICIO MATE
+            DE="MATE"
+            ;;
+
+        6)  #INICIO LXQt
+            DE="LXQt"
+            ;;
+
+        7)  #INICIO LXDE
+            DE="LXDE"
+            ;;
+
+        8)  #INICIO LXDE GTK3
+            DE="LXDE GTK3"
+            ;;
+
+        9)  #INICIO Budgie
+            DE="Budgie"
+            ;;
+
+        10)  #INICIO Cinnamon
+            DE="Cinnamon"
+            ;;
+
+        11)  #INICIO GNOME 2
+            DE="GNOME 2"
+            ;;
+
+        12)  #INICIO Enlightenment
+            DE="Enlightenment"
+            ;;
+
+
+    esac
+done
+            ;;
+#########FIN ESCRITORIO
+        2) #INICIO (WM)
+seleccionWM=true
+
+cmd=(dialog --keep-tite --backtitle "${title}" \
+--no-collapse --cr-wrap --column-separator "|" --no-tags --ok-label "${msg_env_select}" --menu "${msg_env_selection}" 14 60 14)
+
+options=(1 "${msg_env_i3}"
+         2 "${msg_env_bspwm}"
+         3 "${msg_env_dwm}"
+         4 "${msg_env_awesome}"
+         5 "${msg_env_openbox}")
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+for choice in $choices
+do
+    case $choice in
+        1)  
+            WM="i3wm"
+            ;;
+
+        2)
+            WM="bspwm"
+            ;;
+
+        3)
+            WM="dwm"
+            ;;
+
+        4)
+            WM="awesome"
+            ;;
+
+        5)
+            WM="openbox"
+            ;;
+    esac
+done
+#FINAL (WM)
+            ;;
+            
+
+        3)
+          seleccionTTY=true
+          tty="tty"
+          ;;
+
+
+    esac
+done
+
+sectionenv=1
+
+
+}
+
+installenvironment() {
+
+case $environment in 
+
+  "tty")
+  echo "" 
+  echo ${msg_env_installtty} 
+  echo "" 
+
+  ;;
+
+  "Xfce4 Arcris")
+  echo "" 
+  echo ${msg_env_installxfce4_arcris}
+  echo "" 
+
+
+  ;;
+
+
+  "Xfce4")
+  echo "" 
+  echo ${msg_env_installxfce4}
+  echo "" 
+
+
+  ;;
+
+
+
+  "Gnome")
+  echo "" 
+  echo ${msg_env_installgnome}
+  echo "" 
+
+
+  ;;
+
+
+  "Gnome Lite")
+  echo "" 
+  echo ${msg_env_installgnome_lite}
+  echo "" 
+
+
+  ;;
+
+
+
+  "Gnome Arcris")
+  echo "" 
+  echo ${msg_env_installgnome_arcris}
+  echo "" 
+
+
+
+  ;;
+
+
+
+
+  "KDE Plasma")
+  echo "" 
+  echo ${msg_env_installkde}
+  echo "" 
+
+
+  ;;
+
+
+"KDE Plasma Lite")
+  echo "" 
+  echo ${msg_env_installkde_lite} 
+  echo "" 
+
+
+  ;;
+
+
+
+"Deepin")
+  echo "" 
+  echo ${msg_env_installdeepin}
+  echo "" 
+
+
+  ;;
+
+
+"MATE")
+  echo "" 
+  echo ${msg_env_installmate}
+  echo "" 
+
+
+  ;;
+
+
+"LXQt")
+  echo "" 
+  echo ${msg_env_installlxqt} 
+  echo "" 
+
+
+  ;;
+
+
+
+"LXDE")
+  echo "" 
+  echo ${msg_env_installlxde}
+  echo "" 
+
+
+  ;;
+
+
+
+"LXDE GTK3")
+  echo "" 
+  echo ${msg_env_installlxdegtk3} 
+  echo "" 
+
+
+  ;;
+
+
+
+"Budgie")
+  echo "" 
+  echo ${msg_env_installbudgie} 
+  echo "" 
+
+
+  ;;
+
+
+"Cinnamon")
+  echo "" 
+  echo ${msg_env_installcinnamon} 
+  echo "" 
+
+
+
+  ;;
+
+
+
+"GNOME 2")
+  echo "" 
+  echo ${msg_env_installgnome2}
+  echo "" 
+
+
+  ;;
+
+
+
+"Enlightenment")
+  echo "" 
+  echo ${msg_env_installenlight} 
+  echo "" 
+
+
+  ;;
+
+
+"i3wm")
+  echo "" 
+  echo ${msg_env_installi3w}
+  echo "" 
+
+
+  ;;
+
+
+
+"bspwm")
+  echo "" 
+  echo ${msg_env_installbspwm} 
+  echo "" 
+
+  
+  ;;
+
+
+"dwm")
+  echo "" 
+  echo ${msg_env_installdwm} 
+  echo "" 
+
+  
+  ;;
+
+
+
+"awesome")
+  echo "" 
+  echo ${msg_env_installawesome}
+  echo "" 
+
+  
+  ;;
+
+
+
+"openbox")
+  echo "" 
+  echo ${msg_env_installopenbox} 
+  echo "" 
+
+  
+  ;;
+
+
+
+
+esac
+
+}
+
+environment
+
+if [[ $seleccionDE == true ]]; then
+    environment=$DE
+elif [[ $seleccionWM == true ]]; then
+    environment=$WM
+else
+    environment=$tty
+fi
+
+installenvironment

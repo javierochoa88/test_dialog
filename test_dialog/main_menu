@@ -1,0 +1,57 @@
+#!/bin/bash
+
+title="Arcris Install"
+title_menu="-| Arcris for fun|-"
+
+
+highmenu=22
+widthmenu=69
+
+select_ok_label="*Select*"
+
+menu1=" 1 USERS          "
+menu2=" 2 TIMEZONE       "
+menu3=" 3 LANGUAGE       "
+menu4=" 4 SHELL          "
+menu5=" 5 DISK           "
+menu6=" 6 KERNEL         "
+menu7=" 7 DRIVER VIDEO   "
+menu8=" 8 (DE) or (WM)   "
+menu9=" 9 EXTRA PROGRAMS "
+menu10="             >>>           INSTALL          <<<                     "
+menu11="             >>>            EXIT            <<<                     "
+
+submenu1="Establish Personal Data                      "
+submenu2="Set location for your system                 "
+submenu3="Set your system language                     "
+submenu4="Set your system shell                        "
+submenu5="Partition your disk from your installation   "
+submenu6="Set the kernel for Arch                      "
+submenu7="Set your system video driver                 "
+submenu8="Choose a Desktop or Window Manager           "
+submenu9="Select extra programs - This is optional     "
+submenu10="Install Arch Linux on your Disk"
+submenu11="Exit ArcriScript"
+
+
+title_error="-| ERROR |-"
+btn_confirm="Confirm"
+
+text_menu="\nSelect an option below using the keys\n[UP ARROW] / [DOWN ARROW] and [SPACE] or [ENTER]\nAlternative keys can also be used: [+], [-] and [TAB]. \n "
+menuprincipal=(dialog --keep-tite --default-item "${current_item}" --backtitle "${title}" --title "${title_menu}" \
+--ok-label "${select_ok_label}" --nocancel --no-tags \
+--menu "${text_menu}" ${highmenu} ${widthmenu} 10)
+
+options=(   1 "${menu1} ${submenu1}" 
+            2 "${menu2} ${submenu2}" 
+            3 "${menu3} ${submenu3}" 
+            4 "${menu4} ${submenu4}" 
+            5 "${menu5} ${submenu5}" 
+            6 "${menu6} ${submenu6}" 
+            7 "${menu7} ${submenu7}" 
+            8 "${menu8} ${submenu8}" 
+            9 "${menu9} ${submenu9}" 
+            10 "${menu10}" 
+            11 "${menu11}"  )
+
+choices=$("${menuprincipal[@]}" "${options[@]}" 2>&1 >/dev/tty)

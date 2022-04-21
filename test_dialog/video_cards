@@ -1,0 +1,47 @@
+#!/bin/bash
+title="| Arcris Instalación fácil de ArchLinux |"
+msg_video_chose="-| Choose an option -| \nYou can use the [UP] [DOWN] arrow keys to see more options."
+msg_video_driver="-| Driver de Vídeo |-"
+
+msg_graphics_card="-| Video Graphics Card detected |- See the title below."
+msg_graphics_card1="  Video vesa (Generic All)             "
+msg_graphics_card2="  Intel (Open Source)                  "
+msg_graphics_card3="  AMD/ATI (Open Source)                "
+msg_graphics_card4="  AMD/Radeon (Open Source)             "
+msg_graphics_card5="  Nvidia (Open Source)                 "
+msg_graphics_card6="  Nvidia + Intel (Open Source)         "
+msg_graphics_card7="  Nvidia 495xx (Linux Stable)          "
+msg_graphics_card8="  Nvidia 390xx (Linux Stable)          "
+msg_graphics_card9="  Nvidia 495xx (Linux LTS)             "
+msg_graphics_card10="  Nvidia 390xx (Linux LTS)             "
+msg_graphics_card11="  Nvidia 495xx (Linux Hardened - Zen)  "
+msg_graphics_card12="  Nvidia 390xx (Linux Hardened - Zen)  "
+msg_graphics_card13="  Nvidia 495xx (Linux Stable + Intel)  "
+
+drivermanual () {
+
+nombreGrafica=$(lspci | grep VGA |  awk -F " " '{print $5,$6,$7,$8,$9,$10}')
+
+cmd=(dialog --nocancel --no-tags --backtitle "${msg_graphics_card}" --title "${nombreGrafica}" \
+    --menu "${msg_video_chose}" 13 60 04)
+
+options=(   1 "${msg_graphics_card1}"
+            2 "${msg_graphics_card2}"
+            3 "${msg_graphics_card3}"
+            4 "${msg_graphics_card4}"
+            5 "${msg_graphics_card5}"
+            6 "${msg_graphics_card6}"
+            7 "${msg_graphics_card7}"
+            8 "${msg_graphics_card8}"
+            9 "${msg_graphics_card9}"
+            10 "${msg_graphics_card10}"
+            11 "${msg_graphics_card11}"
+            12 "${msg_graphics_card12}"
+            13 "${msg_graphics_card13}" )
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+
+}
+
+drivermanual

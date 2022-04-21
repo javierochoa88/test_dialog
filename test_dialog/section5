@@ -1,0 +1,200 @@
+#!/bin/bash
+
+title="| Arcris easy Installation of ArchLinux |"
+
+title_menu="-| Arcris for fun|-"
+
+btn_confirm="Confirm"
+
+################################################################
+# SECTION 5
+################################################################
+
+btn_accept="Accept"
+msg_coming="\nComing soon...\n"
+
+title_disk="-| Disks |-"
+
+msg_menu_disk="\nChoose your best option for your System\n "
+
+msg_menu_disk1=" Automatic Partitioning                       "
+msg_menu_disk2=" Automatic Partitioning with Disk Encryption  "
+msg_menu_disk3=" Manual Partitioning                          "
+msg_menu_disk4=" Partitioning with another Operating System   "
+msg_menu_disk5=" Change or Create your Disk partition Table   "
+msg_menu_disk6=" Format your entire disk with DD              "
+
+menu_part_option="\nChoose the best option for the system\n\nThe SSD disk has a life cycle limited\n by the write cycles.
+\nUse the SWAP to improve the performance\nalthough the SSD life will be shorter.\n "
+msg_part_auto="-| Automatic disk partitioning |-"
+msg_part_op1=" Root ( ext4 ) Recommended     " 
+msg_part_op2=" Root - Swap ( ext4 )          "
+msg_part_op3=" Root - Home ( ext4 )          "
+msg_part_op4=" Root - Home - Swap ( ext4 )   "
+msg_part_op5=" Root ( Btrfs )   "
+
+msg_part_select="Select disk"
+msg_part_select_disk="Select your disk"
+msg_part_select_arch="\nSelect disk for Arch Linux\n "
+msg_uefi_disk="-| Preparing disk - UEFI |-"
+msg_part_mount="-| Formating and mounting Partitions |-"
+msg_bios_disk="-| Preparing Disk - BIOS LEGACY |-"
+msg_part_auto2="-| Disks and Partitions |-"
+
+msg_part_auto2swap="\nEnter the amount of SWAP\n\nGigabytes (G) - Megabytes (M) - Kibibyte (K)\n\n> Do not leave initial blank spaces\n> Do not forget your label after the nuber\n\
+> [TAB] o [UP ARROW] / [DOWN ARROW]\n\nAvailable Gigabytes ${sizedisk}\n "
+
+msg_part_swap=" SWAP in GB:"
+
+msg_part_auto3="\nEnter the size for ROOT.\nThe size of HOME directory is the remainder.\n\nGigabytes (G) - Megabytes (M) - Kibibyte (K)\n\n> Do no leave blank spaces at the begining\n> No olvidar su etiqueta al final del número\n\
+> [Tabulador] o [FLECHA ARRIBA] / [FLECHA ABAJO]\n\nGigabytes disponibles ${sizedisk}\n "
+
+msg_part_auto3root=" ROOT size in GB:"
+
+msg_part_auto4="\nEnter ROOT and SWAP size.\nThe HOME size is the remainder disk space.\n\nGigabytes (G) - Megabytes (M) - Kibibyte (K)\n\n> Do not leave empty spaces at the begining\n> Do not forget the label at the end of the number\n\
+> [TAB] o [UP ARROW] / [DOWN ARROW]\n\nAvailable Gigabytes ${sizedisk}\n "
+
+msg_part="-| Message |-"
+msg_part_delete="\n> This process wipe out the entire disk, do not cancel it.\
+\n\n> Sometimes you should reboot to see the changes."
+msg_part_confirm="-| Accept |-"
+msg_part_confirm_delete="\nThis may take some time depending on the size of the selected disk\n\ndd if=/dev/zero of="${disk}" bs=4M conv=fsync oflag=direct status=progress\n\n¿ Do you want to continue ?" 
+
+msg_fmt_uefi="-| Formating disk - UEFI |-"
+msg_fmt_bios="-| Formating disk - BIOS LEGACY |-"
+msg_fmt_disk="-| Disk partitioning |-"
+
+msg_fmt_create=">\n> Create the right partition table\n> Your initial system is : ${tableboot}"
+msg_fmt_type1=" An almost graphical formating tool"
+msg_fmt_type2=" A command line formating tool    "
+msg_fmt_mount="-| Mount point selection |-"
+msg_fmt_mount_root="\nSelect the root partition: [ / ]\n "
+msg_fmt_ext4="| Formating the partition to EXT4 |"
+
+msg_fmt_mount_options="Mount and format selected"
+msg_fmt_end="No more partitions"
+
+menu_fmt_opt="Select other mount points:\n\
+\n[SPACE] for select * \n\
+[ENTER] to continue. \n\n\
+All the partitions will be formatted as EXT4 \n "
+msg_fmt_opt1="Home user"
+msg_fmt_opt2="Tmp partition"
+msg_fmt_opt3="Usr partition"
+msg_fmt_opt4="Var partition"
+msg_fmt_opt5="Srv partition"
+msg_fmt_opt6="Opt partition"
+msg_fmt_opt7="Swap partition"
+
+msg_fmt_part="| Choose the partition you want for:: home |"
+msg_fmt_part_tmp="| Choose the partition you want for: tmp |"
+msg_fmt_part_usr="| Choose the partition you want for: usr |"
+msg_fmt_part_var="| Choose the partition you want for: var |"
+msg_fmt_part_srv="| Choose the partition you want for: srv |"
+msg_fmt_part_opt="| Choose the partition you want for: opt |"
+msg_fmt_part_swap="| Choose the partition you want for: swap |"
+msg_fmt_swap="| Formating Swap Linux |"
+msg_fmt_info="-| Partition results |-"
+
+msg_dual_boot="-| Dual Boot |-" 
+msg_fmt_dual1=" DualBoot with root only                    "
+msg_fmt_dual2=" DualBoot and several mount points          "
+
+msg_encrypt_key="-| Disk password encryption |-"
+msg_encrypt_pass="\nEnter a secure password for ${sizedisk}:\n "
+
+msg_man_part="-| PARTITION FORMAT |-"
+msg_man_cancel="Do not format"
+msg_man_chose="\nChose the file system type\n\nEXT4 >> For Linux\nFAT >> FAT32 for UEFI partition\nNTFS >> Windows partition\n\n$(fdisk -l $disk | grep dos || fdisk -l $disk | grep gpt)"
+msg_fmt_ext2="| Format partition to EXT2 |"
+msg_fmt_ext3="| Format partition to EXT3 |"
+msg_fmt_reiserfs="| Formato partition to ReiserFS |"
+msg_fmt_fat32="| Format partition to FAT 32 | UEFI partition... |"
+msg_fmt_exfat="| Format partition to ExFAT |"
+msg_fmt_ntfs="| Format partition to NTFS - Windows |"
+msg_fmt_f2fs="| Format partition to F2FS |"
+msg_fmt_jfs="| Format partition to JFS |"
+msg_fmt_xfs="| Format partition to XFS |"
+msg_fmt_nilfs2="| Format partition to NilFS2 |"
+msg_fmt_udf="| Formate partition to UDF |"
+msg_fmt_btrfs="| Format partition to BTRFS |"
+
+msg_fmt_part="| PARTITION TYPE |"
+msg_fmt_opt0="Bootloader in EFI boot"
+msg_fmt_part_efi="| Chose the partition for: efi |"
+msg_fmt_boot="Bootloader files on boot"
+msg_fmt_part_boot="| Chose the partition for: boot |"
+
+msg_part_select_home="\nChose the disk for HOME\n "
+
+
+
+proximamente () {
+    dialog --backtitle "${title}" --title "${title_disk}" --stdout --ok-label "${btn_accept}" --msgbox "${msg_coming}" 7 55
+}
+
+
+disksystem () {
+
+GRUBINSTALL=1
+
+cmd=(dialog --no-collapse --cr-wrap --backtitle "${title}" --title "${title_disk}" \
+--ok-label "${btn_confirm}" --menu "${msg_menu_disk}" 15 60 15)
+options=(1 "${msg_menu_disk1}"   
+         2 "${msg_menu_disk2}"
+         3 "${msg_menu_disk3}"
+         4 "${msg_menu_disk4}"
+         5 "${msg_menu_disk5}"
+         6 "${msg_menu_disk6}")
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+clear
+for choice in $choices
+do
+    case $choice in
+    ################
+
+1) ################ 
+source lib/partition/autopartition
+autopartition
+;;
+
+2) ################
+source lib/partition/encryptpartition
+# GRUBINSTALL=2
+# encryptpartition
+proximamente
+;;
+3) ################
+source lib/partition/manualpartition
+# manualpartition
+manualpartition
+;;
+
+4) ################
+source lib/partition/dualbootpartition
+GRUBINSTALL=3
+dualpartition
+;;
+
+
+5) ################
+source lib/partition/tabledisk
+tabledisk
+;;
+
+
+6) ################
+source lib/partition/deletediskdd
+deletediskdd
+;;
+
+    esac
+done
+
+sectiondisk=1
+
+}
+
+
+disksystem

@@ -1,0 +1,22 @@
+#!/bin/bash
+title="Arcris Install"
+msg_part_select="Select disk"
+msg_part_select_disk="Select your disk"
+msg_part_select_arch="\nSelect disk for Arch Linux\n "
+oklabel="Next"
+tableboot="BIOS LEGACY"
+
+msg_fmt_create="\n> Create the right partition table\n> Your initial system is : ${tableboot}"
+msg_fmt_disk="-| Disk partitioning |-"
+
+msg_fmt_type1=" An almost graphical formating tool"
+msg_fmt_type2=" A command line formating tool    "
+
+
+part="$(lsblk -lno NAME,SIZE,TYPE | grep 'disk' | awk '{print "/dev/" $1 " " $2}' | sort -u | sed '/f/d' | sed '/sr/d' )" 
+disk=$(dialog --backtitle "${title}" --clear  --ok-label "${msg_part_select}" --no-cancel --menu "${msg_part_select_arch}" 12 45 0 ${part} 2>&1 >/dev/tty)
+
+partitioner=$(dialog --backtitle "${title}" --clear --title "${msg_fmt_disk}" --ok-label "${oklabel}" --no-cancel --menu "${msg_fmt_create}" 9 0 0\
+    "cfdisk" "${msg_fmt_type1}" \
+    "fdisk " "${msg_fmt_type2}" \
+    "parted" "${msg_fmt_type2}"  2>&1 > /dev/tty)

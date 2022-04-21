@@ -1,0 +1,37 @@
+#!/bin/bash
+
+title="Arcris Install"
+title_menu="-| Arcris for fun|-"
+btn_accept="Accept"
+msg_coming="\nComing soon...\n"
+btn_confirm="Confirm"
+
+title_disk="-| Disks |-"
+
+msg_menu_disk="\nChoose your best option for your System\n "
+
+msg_menu_disk1=" Automatic Partitioning                       "
+msg_menu_disk2=" Automatic Partitioning with Disk Encryption  "
+msg_menu_disk3=" Manual Partitioning                          "
+msg_menu_disk4=" Partitioning with another Operating System   "
+msg_menu_disk5=" Change or Create your Disk partition Table   "
+msg_menu_disk6=" Format your entire disk with DD              "
+
+disksystem () {
+
+GRUBINSTALL=1
+
+cmd=(dialog --no-collapse --cr-wrap --backtitle "${title}" --title "${title_disk}" \
+	--ok-label "${btn_confirm}" --menu "${msg_menu_disk}" 15 60 15)
+options=(1 "${msg_menu_disk1}"   
+         2 "${msg_menu_disk2}"
+         3 "${msg_menu_disk3}"
+         4 "${msg_menu_disk4}"
+         5 "${msg_menu_disk5}"
+         6 "${msg_menu_disk6}")
+
+choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+}
+
+disksystem
